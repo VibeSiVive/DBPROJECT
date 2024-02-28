@@ -118,6 +118,7 @@ namespace DBPROJECT
             this.btnSave.TabIndex = 5;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // label1
             // 
@@ -187,6 +188,7 @@ namespace DBPROJECT
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(337, 20);
             this.txtEmail.TabIndex = 13;
+            this.txtEmail.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.EnableSaveButton);
             // 
             // txtSMTPHOST
             // 
@@ -194,6 +196,7 @@ namespace DBPROJECT
             this.txtSMTPHOST.Name = "txtSMTPHOST";
             this.txtSMTPHOST.Size = new System.Drawing.Size(337, 20);
             this.txtSMTPHOST.TabIndex = 14;
+            this.txtSMTPHOST.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.EnableSaveButton);
             // 
             // txtSMTPport
             // 
@@ -201,6 +204,7 @@ namespace DBPROJECT
             this.txtSMTPport.Name = "txtSMTPport";
             this.txtSMTPport.Size = new System.Drawing.Size(124, 20);
             this.txtSMTPport.TabIndex = 15;
+            this.txtSMTPport.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.EnableSaveButton);
             // 
             // pkrBirthdate
             // 
@@ -211,6 +215,7 @@ namespace DBPROJECT
             this.pkrBirthdate.Size = new System.Drawing.Size(125, 20);
             this.pkrBirthdate.TabIndex = 16;
             this.pkrBirthdate.Value = new System.DateTime(2024, 1, 1, 0, 0, 0, 0);
+            this.pkrBirthdate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.EnableSaveButton);
             // 
             // cbxGender
             // 
@@ -222,6 +227,7 @@ namespace DBPROJECT
             this.cbxGender.Name = "cbxGender";
             this.cbxGender.Size = new System.Drawing.Size(125, 21);
             this.cbxGender.TabIndex = 17;
+            this.cbxGender.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.EnableSaveButton);
             // 
             // frmUserProfile
             // 
@@ -252,6 +258,7 @@ namespace DBPROJECT
             this.Name = "frmUserProfile";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "User Profile";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmUserProfile_FormClosing);
             this.Load += new System.EventHandler(this.frmUserProfile_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictBoxUser)).EndInit();
             this.ResumeLayout(false);

@@ -101,7 +101,7 @@ namespace DBPROJECT
 
             }
         }
-        private void frmUserProfile_Load(object sender, EventArgs e) //event fired when opening form
+        private void frmUserProfile_Load(object sender, EventArgs e)
         {
             this.frmUserProfile_LoadUserData();
             this.frmUserProfile_GetPhotofromField();
@@ -132,6 +132,24 @@ namespace DBPROJECT
             if (openPhoto.ShowDialog() == DialogResult.OK)
             {
                 pictBoxUser.Image = Image.FromFile(openPhoto.FileName);
+            }
+        }
+
+        private void EnableSaveButton(object sender, KeyPressEventArgs e)
+        {
+            this.btnSave.Enabled = true;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            this.btnSave.Enabled = false;
+        }
+
+        private void frmUserProfile_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.btnSave.Enabled)
+            {
+                 
             }
         }
     }
