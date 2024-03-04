@@ -215,6 +215,7 @@ namespace DBPROJECT
             this.pkrBirthdate.Size = new System.Drawing.Size(125, 20);
             this.pkrBirthdate.TabIndex = 16;
             this.pkrBirthdate.Value = new System.DateTime(2024, 1, 1, 0, 0, 0, 0);
+            this.pkrBirthdate.ValueChanged += new System.EventHandler(this.pkrBirthdate_ValueChanged);
             this.pkrBirthdate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.EnableSaveButton);
             // 
             // cbxGender
@@ -227,6 +228,7 @@ namespace DBPROJECT
             this.cbxGender.Name = "cbxGender";
             this.cbxGender.Size = new System.Drawing.Size(125, 21);
             this.cbxGender.TabIndex = 17;
+            this.cbxGender.TextChanged += new System.EventHandler(this.cbxGender_TextChanged);
             this.cbxGender.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.EnableSaveButton);
             // 
             // frmUserProfile
