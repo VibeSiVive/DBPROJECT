@@ -111,10 +111,19 @@ namespace DBPROJECT
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            if (csMessageBox.Show("User photo is cleared...", "Information",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (csMessageBox.Show("User photo is cleared...", "Information", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                this.ClearPhototoField();
+                if (Globals.glOpenSqlConn())
+                {
+                    SqlCommand cmd = new SqlCommand("spClearUserPhoto", Globals.sqlconn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@liduser", this.iduser);
+
+                    cmd.ExecuteNonQuery();
+                    this.pictBoxUser.Image = null;
+                }
+                csMessageBox.Show("User Photo Erased", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // this.ClearPhototoField();
             }
         }
 
@@ -154,11 +163,11 @@ namespace DBPROJECT
         {
             if (Globals.glOpenSqlConn())
             {
-                String qrystr = "update users set photo=null where id =" +
-                    Globals.gIdUser.ToString();
+                String qrystr = "update dbo.users set photo=null where id = @iduser";
+                   // Globals.gIdUser.ToString();
 
                 SqlCommand cmd = new SqlCommand(qrystr, Globals.sqlconn);
-
+                cmd.Parameters.AddWithValue("@iduser", this.iduser.ToString());
                 if (cmd.ExecuteNonQuery() == 1)
                 {
                     this.pictBoxUser.Image = null;
