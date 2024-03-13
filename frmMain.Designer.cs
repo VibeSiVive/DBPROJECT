@@ -196,7 +196,7 @@ namespace DBPROJECT
             this.MinimizeBox = false;
             this.Name = "frmMain";
             this.Text = "Main Form";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_Load);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.tsTop.ResumeLayout(false);
             this.tsTop.PerformLayout();

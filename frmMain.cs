@@ -20,7 +20,7 @@ namespace DBPROJECT
 
 
         }
-       
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             // if (MessageBox.Show("Exit the application?", "Please confirm",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
@@ -84,18 +84,19 @@ namespace DBPROJECT
             UserProfilefrm.Dispose();
         }
 
+        private frmUser Userfrm;
+
         private void usersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UserProfilefrm = new frmUser(Globals.gIdUser, Globals.gLoginName);
-            UserProfilefrm.FormClosed += UserProfilefrm_FormClosed;
-            UserProfilefrm.MdiParent = this;
-            UserProfilefrm.Show();
+            Userfrm = new frmUser();
+            Userfrm.FormClosed += Userfrm_FormClosed;
+            Userfrm.MdiParent = this;
+            Userfrm.Show();
         }
-
-        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        private void Userfrm_FormClosed(object sender, EventArgs e)
         {
             Userfrm.Dispose();
         }
     }
+
 }
-    

@@ -15,13 +15,10 @@ namespace DBPROJECT
     public partial class frmUser : Form
     {
         DataTable DTable;
-        //DataSet DTable;
         SqlDataAdapter DAdapter;
-        SqlCommandBuilder DCommandBuilder;
         SqlCommand Dcommand;
         BindingSource DBindingSource;
         int idcolumn = 0;
-
         public frmUser()
         {
             InitializeComponent();
@@ -29,13 +26,15 @@ namespace DBPROJECT
 
         private void frmUser_Load(object sender, EventArgs e)
         {
-            this.BindMainGrind();
+            this.BindMainGrid();
+            this.FormatGrid();
         }
-        private void BindMainGrind()
+
+        private void BindMainGrid()
         {
             if (Globals.glOpenSqlConn())
             {
-                this.Dcommand = new SqlCommand("spGetallUsers", Globals.sqlconn);
+                this.Dcommand = new SqlCommand("spGetAllUsers", Globals.sqlconn);
                 this.DAdapter = new SqlDataAdapter(this.Dcommand);
 
                 this.DTable = new DataTable();
@@ -48,7 +47,7 @@ namespace DBPROJECT
 
                 dgvMain.DataSource = this.DBindingSource;
 
-                this.bNavMain.BindingSource = this.DBindingSource
+                this.bNavMain.BindingSource = this.DBindingSource;
             }
         }
 
@@ -56,12 +55,11 @@ namespace DBPROJECT
         {
             this.dgvMain.Columns["id"].Visible = false;
 
-            this.dgvMain.Columns["loginname"].HeaderText = "Logn Name";
+            this.dgvMain.Columns["loginname"].HeaderText = "Login Name";
             this.dgvMain.Columns["active"].HeaderText = "Active";
-            this.dgvMain.Columns["mustchangepwd"].HeaderText = "Must Change PWD";
             this.dgvMain.Columns["email"].HeaderText = "Email";
-            this.dgvMain.Columns["smtphost"].HeaderText = "SMTP Port";
-            this.dgvMain.Columns["smtpport"].HeaderText = "SMTP Port";
+            this.dgvMain.Columns["smtphost"].HeaderText = "SMPT Host";
+            //this.dgvMain.Columns["smtport"].HeaderText = "SMPT Port";
             this.dgvMain.Columns["gender"].HeaderText = "Gender";
             this.dgvMain.Columns["birthdate"].HeaderText = "Birthday";
 
@@ -70,6 +68,55 @@ namespace DBPROJECT
 
             this.dgvMain.EnableHeadersVisualStyles = false;
             this.dgvMain.ColumnHeadersDefaultCellStyle.BackColor = Globals.gGridHeaderColor;
+        }
+
+        private void dgvMain_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            using (SolidBrush b = new SolidBrush(((DataGridView)sender).RowHeadersDefaultCellStyle.ForeColor))
+
+            {
+
+                e.Graphics.DrawString(
+
+                    String.Format("{0,10}", (e.RowIndex + 1).ToString()),
+
+                    e.InheritedRowStyle.Font, b, e.RowBounds.Location.X + 10, e.RowBounds.Location.Y + 4);
+
+            }
+        }
+
+        private void dgvMain_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int firstDisplayedCellIndex = dgvMain.FirstDisplayedCell.RowIndex;
+
+            int lastDisplayedCellIndex = firstDisplayedCellIndex + dgvMain.DisplayedRowCount(true);
+
+
+
+            Graphics Graphics = dgvMain.CreateGraphics();
+
+            int measureFirstDisplayed = (int)(Graphics.MeasureString(firstDisplayedCellIndex.ToString(), dgvMain.Font).Width);
+
+            int measureLastDisplayed = (int)(Graphics.MeasureString(lastDisplayedCellIndex.ToString(), dgvMain.Font).Width);
+
+
+
+            int rowHeaderWitdh = System.Math.Max(measureFirstDisplayed, measureLastDisplayed);
+
+            dgvMain.RowHeadersWidth = rowHeaderWitdh + 40;
+        }
+
+        private void dgvMain_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            if (csMessageBox.Show("Delete Row", "Please confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+
+            {
+
+                this.dgvMain.Rows.RemoveAt(this.dgvMain.SelectedRows[0].Index);
+
+                csMessageBox.Show("Row is deleted.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
         }
     }
 }
